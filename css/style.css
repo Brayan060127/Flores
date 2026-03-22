@@ -1,0 +1,185 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;1,900&display=swap');
+
+* {
+    font-family: 'Poppins', cursive;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    color: rgb(255, 255, 255);
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    overflow: hidden;
+}
+
+/* --- CONTENEDOR DE BOTONES --- */
+.botones {
+    padding: 20px;
+    background-color: transparent;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px; /* Espacio extra respecto al texto */
+}
+
+/* --- EL BOTÓN CON FORMA DE CORAZÓN QUE PALPITA --- */
+.botones a {
+    text-decoration: none;
+    position: relative;
+    width: 60px; /* Tamaño base */
+    height: 60px;
+    background-color: #dd29ce; /* Color fucsia original */
+    display: inline-block;
+    
+    /* Combinamos rotación base con la animación de latido */
+    transform: rotate(-45deg);
+    
+    /* NUEVA ANIMACIÓN: latido de 1.5s, suave, infinita */
+    animation: latido 1.5s ease-in-out infinite;
+    
+    transition: background-color 0.3s ease;
+    z-index: 10;
+}
+
+/* Las partes redondeadas del corazón */
+.botones a::before,
+.botones a::after {
+    content: "";
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-color: #dd29ce;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.botones a::before {
+    top: -30px;
+    left: 0;
+}
+
+.botones a::after {
+    left: 30px;
+    top: 0;
+}
+
+/* --- NUEVA ANIMACIÓN DE LATIDO --- */
+@keyframes latido {
+    0% {
+        transform: rotate(-45deg) scale(1);
+        filter: drop-shadow(0 0 5px rgba(221, 41, 206, 0.5));
+    }
+    15% {
+        transform: rotate(-45deg) scale(1.15); /* Primer pulso fuerte */
+        filter: drop-shadow(0 0 15px rgba(221, 41, 206, 0.8));
+    }
+    30% {
+        transform: rotate(-45deg) scale(1.05); /* Pequeña pausa */
+    }
+    45% {
+        transform: rotate(-45deg) scale(1.2); /* Segundo pulso más fuerte */
+        filter: drop-shadow(0 0 20px rgba(221, 41, 206, 1));
+    }
+    100% {
+        transform: rotate(-45deg) scale(1); /* Vuelta al estado original */
+        filter: drop-shadow(0 0 5px rgba(221, 41, 206, 0.5));
+    }
+}
+
+/* Interacciones del corazón al pasar el mouse */
+.botones a:hover {
+    background-color: #eeff00; /* Cambia a amarillo */
+    /* Mantenemos el latido pero con el nuevo color */
+    animation: latidoAmarillo 1.5s ease-in-out infinite;
+}
+
+.botones a:hover::before,
+.botones a:hover::after {
+    background-color: #eeff00;
+}
+
+/* Variación de la animación para cuando está en amarillo (Hover) */
+@keyframes latidoAmarillo {
+    0%, 100% {
+        transform: rotate(-45deg) scale(1);
+        filter: drop-shadow(0 0 5px rgba(238, 255, 0, 0.5));
+    }
+    15% {
+        transform: rotate(-45deg) scale(1.15);
+        filter: drop-shadow(0 0 15px rgba(238, 255, 0, 0.8));
+    }
+    45% {
+        transform: rotate(-45deg) scale(1.2);
+        filter: drop-shadow(0 0 20px rgba(238, 255, 0, 1));
+    }
+}
+
+.botones a:focus {
+    background-color: rgb(238, 241, 16);
+    outline: none;
+}
+
+/* --- TEXTOS Y ANIMACIONES (Glow) --- */
+.greetings {
+    font-size: 7rem;
+    font-weight: 900;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.greetings > span {
+    animation: glow 2.5s ease-in-out infinite;
+    display: inline-block; /* Importante para que la animación funcione bien por letra */
+}
+
+@keyframes glow {
+    0%, 100% {
+        color: #eeff00;
+        text-shadow: 0 0 12px #e70d0d, 0 0 50px #e70d0d, 0 0 100px #e70d0d;
+    }
+    10%, 90% {
+        color: #111;
+        text-shadow: none;
+    }
+}
+
+/* Delays de animación para cada letra */
+.greetings > span:nth-child(2) { animation-delay: .2s; }
+.greetings > span:nth-child(3) { animation-delay: .4s; }
+.greetings > span:nth-child(4) { animation-delay: .6s; }
+.greetings > span:nth-child(5) { animation-delay: .8s; }
+.greetings > span:nth-child(6) { animation-delay: 1s; }
+
+.description {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* --- RESPONSIVO --- */
+@media screen and (max-width: 574px) {
+    .greetings {
+        font-size: 3.5rem; /* Un poco más pequeña para móvil */
+        font-weight: 800;
+    }
+    .description {
+        font-size: 1.1rem;
+        padding: 0 15px;
+    }
+    
+    /* Corazón un poco más pequeño en móvil pero mantiene el latido */
+    .botones a, .botones a::before, .botones a::after {
+        width: 45px;
+        height: 45px;
+    }
+    .botones a::before { top: -22px; }
+    .botones a::after { left: 22px; }
+}
